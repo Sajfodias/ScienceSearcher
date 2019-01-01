@@ -1,0 +1,24 @@
+﻿@page
+@model Science_searcher.Pages.UsersModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<html>
+<body>
+    <p>
+        Enter you credentials
+    </p>
+    <div asp-validation-summary="All"></div>
+    <form method="POST">
+        <div>Login: <input asp-for="User.Login" /></div>
+        <div/>
+        <div>Password: <input asp-for="User.Password" /></div>
+        <div/>
+        <input type="submit" title="Create user"/>
+    </form>
+</body>
+</html>
+
