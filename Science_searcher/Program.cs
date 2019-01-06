@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using Science_searcher.Logic;
 
 namespace Science_searcher
 {
     public class Program
     {
+        public static bool flag;
+
         public static void Main(string[] args)
         {
             //CreateWebHostBuilder(args).Build().Run();
@@ -34,6 +37,12 @@ namespace Science_searcher
                 // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
                 NLog.LogManager.Shutdown();
             }
+
+            //Logic.Downloader downloader = new Logic.Downloader();
+            //Task worker = new Task(async () => await downloader.DownloaderLoopAsync(true));
+            //worker.Start();
+            //if (flag == false)
+            //    worker.Wait();
         }
 
         #region Old_WebHostBuilder
