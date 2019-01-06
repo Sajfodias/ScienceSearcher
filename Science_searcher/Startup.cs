@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Science_searcher.Logic;
+
 
 namespace Science_searcher
 {
@@ -31,13 +33,12 @@ namespace Science_searcher
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<Models.usersContext>(options => options.UseSqlServer(Configuration.GetConnectionString("users")));
-            services.AddDbContext<Models.credential_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("credentialDb")));
-            services.AddDbContext<Models.science_datastoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("scienceDatastore")));
+            //services.AddDbContext<Models.usersContext>(options => options.UseSqlServer(Configuration.GetConnectionString("users")));
+            //services.AddDbContext<Models.credential_dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("credentialDb")));
+            services.AddDbContext<Model.ScienceDatastoreDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("scienceDatastore")));
+            services.AddSingleton<IHostedService,DataLoadService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BCrypt.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Science_searcher.Models;
+//using Science_searcher.Models;
 
 namespace Science_searcher.Logic
 {
@@ -67,45 +67,45 @@ namespace Science_searcher.Logic
             //Hash the password
             _Password = BCrypt.Net.BCrypt.HashPassword(Password, salt);
 
-            //save Login and Password to database
-            try
-            {
-                TUsers user = new TUsers();
-                user.Login = _Login;
-                user.Password = _Password;
+            ////save Login and Password to database
+            //try
+            //{
+            //    TUsers user = new TUsers();
+            //    user.Login = _Login;
+            //    user.Password = _Password;
 
-                using (var userDbContext = new usersContext())
-                {
-                    userDbContext.Add(user);
-                    userDbContext.SaveChanges();
-                }
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, "Exception occured during INSERT the user data to [users].[dbo].[t_Users]");
-            }
+            //    using (var userDbContext = new usersContext())
+            //    {
+            //        userDbContext.Add(user);
+            //        userDbContext.SaveChanges();
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    _logger.LogError(ex, "Exception occured during INSERT the user data to [users].[dbo].[t_Users]");
+            //}
 
-            //select Id from database of the records
-            int _UserId = 0;
-            using (var userDbContext = new usersContext())
-                _UserId = userDbContext.TUsers.Where(u => u.Login == _Login).Select(s=>s.Id).FirstOrDefault();
+            ////select Id from database of the records
+            //int _UserId = 0;
+            //using (var userDbContext = new usersContext())
+            //    _UserId = userDbContext.TUsers.Where(u => u.Login == _Login).Select(s=>s.Id).FirstOrDefault();
 
-            try
-            {
-                TUserPwdGen credentialAdditionalInfo = new TUserPwdGen();
-                credentialAdditionalInfo.Salt = salt;
-                credentialAdditionalInfo.UserId = _UserId;
-                using (var credentialDbContext = new credential_dbContext())
-                {
-                    credentialDbContext.Add(credentialAdditionalInfo);
-                    credentialDbContext.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception occured during saving the salt to [credential_db].[dbo].[t_UserPwdGen]");
-                return;
-            }
+            //try
+            //{
+            //    TUserPwdGen credentialAdditionalInfo = new TUserPwdGen();
+            //    credentialAdditionalInfo.Salt = salt;
+            //    credentialAdditionalInfo.UserId = _UserId;
+            //    using (var credentialDbContext = new credential_dbContext())
+            //    {
+            //        credentialDbContext.Add(credentialAdditionalInfo);
+            //        credentialDbContext.SaveChanges();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex, "Exception occured during saving the salt to [credential_db].[dbo].[t_UserPwdGen]");
+            //    return;
+            //}
 
         }
 
